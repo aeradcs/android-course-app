@@ -1,0 +1,48 @@
+package com.hw.app.fragments.list
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.hw.app.R
+import com.hw.app.database.Share
+import com.hw.app.database.ShareViewModel
+import kotlinx.android.synthetic.main.fragment_list.view.*
+
+class ListFragment : Fragment() {
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        val view = inflater.inflate(R.layout.fragment_list, container, false)
+
+        val data = ArrayList<Share>()
+        for (i in 1..20) {
+            data.add(Share("ticker" + i.toString(), "name", i.toDouble(), i.toDouble()))
+        }
+
+        val recyclerview = view.recycler_view
+        val adapter = ListAdapter(data)
+        recyclerview.adapter = adapter
+        recyclerview.layoutManager = LinearLayoutManager(requireContext())
+
+        val model: ShareViewModel by viewModels()
+        model.getShares().observe(viewLifecycleOwner, Observer{ shares ->
+            adapter.refreshShares(shares)
+        })
+        view.search_button.setOnClickListener {
+            model.loadSharesFromApi()
+        }
+
+        return view
+    }
+
+
+}
