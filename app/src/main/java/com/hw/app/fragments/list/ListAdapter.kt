@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.hw.app.R
 import com.hw.app.database.Share
@@ -37,6 +38,10 @@ class ListAdapter(private var shareList: List<Share>): RecyclerView.Adapter<List
             holder.itemView.percent_tv.setTextColor(Color.parseColor("#27c42f"))
         }
 
+        holder.itemView.list_item.setOnClickListener {
+            val action = ListFragmentDirections.actionListFragmentToItemFragment(currentItem)
+            holder.itemView.findNavController().navigate(action)
+        }
     }
 
     override fun getItemCount(): Int {
