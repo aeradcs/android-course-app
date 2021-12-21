@@ -13,9 +13,6 @@ interface ShareDao {
     @Insert
     fun insertShare(share: Share)
 
-    @Update
-    fun updateShare(share: Share)
-
     @Delete
     fun deleteShare(share: Share)
 }

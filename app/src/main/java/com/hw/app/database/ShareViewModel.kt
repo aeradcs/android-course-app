@@ -1,16 +1,13 @@
 package com.hw.app.database
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.hw.app.api.Api
 import com.hw.app.api.ApiAnswerConverter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class ShareViewModel : ViewModel() {
+class ShareViewModel() : ViewModel() {
     private val shares: MutableLiveData<List<Share>> = MutableLiveData()
 
     fun getShares(): LiveData<List<Share>> {
@@ -42,4 +39,26 @@ class ShareViewModel : ViewModel() {
         }
 
     }
+
+    fun deleteShare(share: Share) {
+        viewModelScope.launch(Dispatchers.IO){
+
+       }
+    }
+
+    fun insertShare(share: Share) {
+        viewModelScope.launch(Dispatchers.IO){
+
+        }
+    }
 }
+
+//class WordViewModelFactory(private val repository: ShareRepository) : ViewModelProvider.Factory {
+//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//        if (modelClass.isAssignableFrom(ShareViewModel::class.java)) {
+//            @Suppress("UNCHECKED_CAST")
+//            return ShareViewModel(repository) as T
+//        }
+//        throw IllegalArgumentException("Unknown ViewModel class")
+//    }
+//}
