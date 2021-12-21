@@ -54,7 +54,6 @@ object Api {
             TUESDAY -> unixTimeFrom = unixTimeTo - 86400 * 4
             else -> unixTimeFrom = unixTimeTo - 86400 * 2
         }
-        println(unixTimeTo)
         for(i in 0 until tickers.size){
             try {
                 answer.add(getStockCandlesForTicker(tickers.get(i), "D", unixTimeFrom, unixTimeTo))

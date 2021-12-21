@@ -24,18 +24,18 @@ class ShareViewModel : ViewModel() {
     fun loadSharesFromApi(symbols: String) {
         viewModelScope.launch (Dispatchers.IO){
             shares.postValue(try {
-                val symbolLookup = Api.getSymbolLookup(symbols)
+                val symbolLookup = Api.getSymbolLookup(symbols)//to find share by name or ticker
                 val tickers = ApiAnswerConverter.parseTickerFromSymbolLookup(symbolLookup)
-                val companyProfiles = Api.getCompanyProfilesForTickers(tickers)
+                val companyProfiles = Api.getCompanyProfilesForTickers(tickers)//to get company name of share
                 val names = ApiAnswerConverter.parseNamesFromCompanyProfiles(companyProfiles)
-                val stockCandles = Api.getOneDayStockCandlesForTickers(tickers)
-                val prices = ApiAnswerConverter.parsesPriceFromStockCandles(stockCandles)
+                val stockCandles = Api.getOneDayStockCandlesForTickers(tickers)//to get price and dayChange
+                val prices = ApiAnswerConverter.parsePricesFromStockCandles(stockCandles)
                 val dayChanges = ApiAnswerConverter.parseDayChangesFromStockCandles(stockCandles)
                 ApiAnswerConverter.convertArraysToShares(tickers, names, prices, dayChanges)
             }
             catch (e: Exception){
                 val list: MutableList<Share> = mutableListOf()
-                list.add(Share("","", 0.0F, 0.0F))
+//                list.add(Share("","", 0.0F, 0.0F))
                 list
             })
 

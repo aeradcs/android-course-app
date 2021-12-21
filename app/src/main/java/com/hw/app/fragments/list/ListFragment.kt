@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.hw.app.R
 import com.hw.app.database.Share
 import com.hw.app.database.ShareViewModel
@@ -37,10 +37,15 @@ class ListFragment : Fragment() {
         model.getShares().observe(viewLifecycleOwner, Observer{ shares ->
             adapter.refreshShares(shares)
         })
+
         view.search_button.setOnClickListener {
             if(!view.find_et.text.isEmpty()){
                 model.loadSharesFromApi(view.find_et.text.toString())
             }
+        }
+
+        view.favorite_tv.setOnClickListener{
+            findNavController().navigate(R.id.action_list_fragment_to_favorite_fragment)
         }
 
         return view

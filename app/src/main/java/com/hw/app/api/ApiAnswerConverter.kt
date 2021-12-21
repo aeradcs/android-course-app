@@ -23,7 +23,7 @@ object ApiAnswerConverter {
         return names
     }
 
-    fun parsesPriceFromStockCandles(stockCandles: MutableList<StockCandles?>): MutableList<Float?> {
+    fun parsePricesFromStockCandles(stockCandles: MutableList<StockCandles?>): MutableList<Float?> {
         val prices: MutableList<Float?> = mutableListOf()
         for (i in 0 until stockCandles.size) {
             try {

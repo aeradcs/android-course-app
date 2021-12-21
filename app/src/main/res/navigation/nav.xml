@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/listFragment">
+    app:startDestination="@id/list_fragment">
 
     <fragment
-        android:id="@+id/listFragment"
+        android:id="@+id/list_fragment"
         android:name="com.hw.app.fragments.list.ListFragment"
-        android:label="ListFragment" >
+        android:label="Stock" >
         <action
-            android:id="@+id/action_listFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            android:id="@+id/action_list_fragment_to_favorite_fragment"
+            app:destination="@id/favorite_fragment" />
     </fragment>
     <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.hw.app.fragments.search.SearchFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
+        android:id="@+id/favorite_fragment"
+        android:name="com.hw.app.fragments.favourite.FavoriteFragment"
+        android:label="Favorite"
+        tools:layout="@layout/fragment_favorite" >
         <action
-            android:id="@+id/action_searchFragment_to_listFragment"
-            app:destination="@id/listFragment" />
+            android:id="@+id/action_favorite_fragment_to_list_fragment"
+            app:destination="@id/list_fragment" />
     </fragment>
 </navigation>
