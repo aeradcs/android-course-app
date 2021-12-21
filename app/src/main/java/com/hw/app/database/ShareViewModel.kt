@@ -1,6 +1,5 @@
 package com.hw.app.database
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +9,6 @@ import com.hw.app.api.ApiAnswerConverter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
-import java.text.DateFormatSymbols
 
 class ShareViewModel : ViewModel() {
     private val shares: MutableLiveData<List<Share>> = MutableLiveData()
@@ -30,11 +28,14 @@ class ShareViewModel : ViewModel() {
                 val tickers = ApiAnswerConverter.parseTickerFromSymbolLookup(symbolLookup)
                 val companyProfiles = Api.getCompanyProfilesForTickers(tickers)
                 val names = ApiAnswerConverter.parseNamesFromCompanyProfiles(companyProfiles)
-                ApiAnswerConverter.convertArraysToShares(tickers, names)
+                val stockCandles = Api.getOneDayStockCandlesForTickers(tickers)
+                val prices = ApiAnswerConverter.parsesPriceFromStockCandles(stockCandles)
+                val dayChanges = ApiAnswerConverter.parseDayChangesFromStockCandles(stockCandles)
+                ApiAnswerConverter.convertArraysToShares(tickers, names, prices, dayChanges)
             }
             catch (e: Exception){
                 val list: MutableList<Share> = mutableListOf()
-                list.add(Share("","", 0.0,0.0))
+                list.add(Share("","", 0.0F, 0.0F))
                 list
             })
 

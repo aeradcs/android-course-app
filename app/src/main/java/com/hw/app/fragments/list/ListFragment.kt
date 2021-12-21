@@ -25,7 +25,7 @@ class ListFragment : Fragment() {
 
         val data = ArrayList<Share>()
         for (i in 1..20) {
-            data.add(Share("ticker" + i.toString(), "name", i.toDouble(), i.toDouble()))
+            data.add(Share("ticker" + i.toString(), "name", i.toFloat(), i.toFloat()))
         }
 
         val recyclerview = view.recycler_view

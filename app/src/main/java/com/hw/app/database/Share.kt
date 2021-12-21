@@ -9,6 +9,6 @@ data class Share (
     @PrimaryKey
     @ColumnInfo(name = "ticker") val ticker: String,
     @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "price") var price : Double,
-    @ColumnInfo(name = "day_change") var dayChange : Double
+    @ColumnInfo(name = "price") var price : Float,
+    @ColumnInfo(name = "day_change") var dayChange : Float
     )
