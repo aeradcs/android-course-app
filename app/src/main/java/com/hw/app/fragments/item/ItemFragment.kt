@@ -6,10 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.hw.app.R
+import com.hw.app.database.Share
+import com.hw.app.database.ShareViewModel
+import com.hw.app.fragments.list.ListAdapter
 import kotlinx.android.synthetic.main.fragment_item.view.*
+import kotlinx.android.synthetic.main.fragment_list.view.*
 import kotlinx.android.synthetic.main.list_item.view.*
+import kotlinx.android.synthetic.main.fragment_favorite.view.*
 
 
 class ItemFragment : Fragment() {

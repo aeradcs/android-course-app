@@ -113,4 +113,15 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/price_header_item_tv"
         app:layout_constraintStart_toEndOf="@+id/price_header_item_tv" />
+
+    <Button
+        android:id="@+id/add_to_fav_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="add to favorite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.55" />
 </androidx.constraintlayout.widget.ConstraintLayout>
