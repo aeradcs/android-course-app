@@ -38,7 +38,9 @@ class ListFragment : Fragment() {
             adapter.refreshShares(shares)
         })
         view.search_button.setOnClickListener {
-            model.loadSharesFromApi()
+            if(!view.find_et.text.isEmpty()){
+                model.loadSharesFromApi(view.find_et.text.toString())
+            }
         }
 
         return view

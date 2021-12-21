@@ -10,6 +10,7 @@ import com.hw.app.api.ApiAnswerConverter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import java.text.DateFormatSymbols
 
 class ShareViewModel : ViewModel() {
     private val shares: MutableLiveData<List<Share>> = MutableLiveData()
@@ -22,10 +23,10 @@ class ShareViewModel : ViewModel() {
 
     }
 
-    fun loadSharesFromApi() {
+    fun loadSharesFromApi(symbols: String) {
         viewModelScope.launch (Dispatchers.IO){
             shares.postValue(try {
-                val symbolLookup = Api.getSymbolLookup("AAPL")
+                val symbolLookup = Api.getSymbolLookup(symbols)
                 val tickers = ApiAnswerConverter.parseTickerFromSymbolLookup(symbolLookup)
                 val companyProfiles = Api.getCompanyProfilesForTickers(tickers)
                 val names = ApiAnswerConverter.parseNamesFromCompanyProfiles(companyProfiles)

@@ -4,19 +4,27 @@ import io.finnhub.api.apis.DefaultApi
 import io.finnhub.api.infrastructure.ApiClient
 import io.finnhub.api.models.CompanyProfile2
 import io.finnhub.api.models.SymbolLookup
+import io.finnhub.api.models.SymbolLookupInfo
 
 object Api {
-    suspend fun getSymbolLookup(symbol: String): SymbolLookup {
+    fun getSymbolLookup(symbol: String): SymbolLookup {
         ApiClient.apiKey["token"] = "c6idegqad3i8jt9dpdn0"
         val apiClient = DefaultApi()
         val answer = apiClient.symbolSearch(symbol)
-        println("getSymbolLookup")
-        var a = 10
-        println(a)
-        return answer
+        if(answer.count!! < 15){
+            return answer
+        }
+        else{
+            val newList: MutableList<SymbolLookupInfo> = mutableListOf()
+            for(i in 0 until 15){
+                newList.add(answer.result!!.get(i))
+            }
+            return SymbolLookup(newList, 15)
+
+        }
     }
 
-    suspend fun getCompanyProfilesForTickers(tickers: List<String>): List<CompanyProfile2> {
+    fun getCompanyProfilesForTickers(tickers: List<String>): List<CompanyProfile2> {
         ApiClient.apiKey["token"] = "c6idegqad3i8jt9dpdn0"
         val apiClient = DefaultApi()
         var result: MutableList<CompanyProfile2> = mutableListOf()
