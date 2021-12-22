@@ -4,13 +4,10 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.hw.app.R
 import com.hw.app.database.Share
-import com.hw.app.fragments.list.ListFragmentDirections
-import kotlinx.android.synthetic.main.list_item.view.*
 import kotlinx.android.synthetic.main.list_item_fav.view.*
 
 class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.MyViewHolder>() {
@@ -53,17 +50,5 @@ class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.MyViewHolder>() {
         notifyDataSetChanged()
     }
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//        var ticker: TextView? = null
-//        var name: TextView? = null
-//        var price: TextView? = null
-//        var dayChange: TextView? = null
-//
-//        init{
-//            ticker = itemView.ticker_tv_fav
-//            name = itemView.name_tv_fav
-//            price = itemView.price_tv_fav
-//            dayChange = itemView.day_change_tv_fav
-//        }
-    }
+    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {}
 }

@@ -11,7 +11,7 @@ import java.time.LocalDate
 import java.util.Calendar.*
 
 object Api {
-    val apiClient : DefaultApi
+    private val apiClient : DefaultApi
 
     init{
         ApiClient.apiKey["token"] = "c6idegqad3i8jt9dpdn0"

@@ -55,6 +55,4 @@ object ApiAnswerConverter {
         }
         return shares
     }
-
-
 }

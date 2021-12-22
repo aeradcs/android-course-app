@@ -1,19 +1,15 @@
 package com.hw.app.fragments.list
 
 import android.graphics.Color
-import android.graphics.Color.red
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.hw.app.R
 import com.hw.app.database.Share
 import kotlinx.android.synthetic.main.list_item.view.*
-import kotlinx.coroutines.withContext
 
 class ListAdapter(private var shareList: List<Share>): RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 

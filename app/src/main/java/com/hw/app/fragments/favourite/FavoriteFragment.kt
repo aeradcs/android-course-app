@@ -9,17 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hw.app.R
-import com.hw.app.database.Share
 import com.hw.app.database.ShareViewModel
-import com.hw.app.fragments.list.ListAdapter
 import kotlinx.android.synthetic.main.fragment_favorite.view.*
-import kotlinx.android.synthetic.main.fragment_list.view.*
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 
 
 class FavoriteFragment : Fragment() {
-//    private lateinit var model: ShareViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,8 +33,6 @@ class FavoriteFragment : Fragment() {
         recyclerview.layoutManager = LinearLayoutManager(requireContext())
 
         val model: ShareViewModel by viewModels()
-//        model = ViewModelProvider(this).get(ShareViewModel::class.java)
-
         model.getSharesFromDatabase().observe(viewLifecycleOwner, Observer{ shares ->
             adapter.refreshShares(shares)
         })
@@ -50,6 +43,4 @@ class FavoriteFragment : Fragment() {
 
         return view
     }
-
-
 }
