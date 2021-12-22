@@ -4,10 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.hw.app.database.cache.CacheShare
+import com.hw.app.database.cache.CacheShareDao
 
-@Database(entities = [Share::class], version = 1, exportSchema = false)
+@Database(entities = [Share::class, CacheShare::class], version = 2, exportSchema = false)
 abstract class ShareDatabase : RoomDatabase() {
     abstract fun shareDao(): ShareDao
+    abstract fun cacheShareDao(): CacheShareDao
 
     companion object{
         @Volatile
@@ -23,7 +26,8 @@ abstract class ShareDatabase : RoomDatabase() {
                     context.applicationContext,
                     ShareDatabase::class.java,
                     "db"
-                ).build()
+                ).fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 return instance
             }

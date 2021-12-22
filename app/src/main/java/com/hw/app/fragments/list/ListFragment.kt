@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.hw.app.R
 import com.hw.app.database.Share
 import com.hw.app.database.ShareViewModel
+import com.hw.app.database.data.Data
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
 class ListFragment : Fragment() {
@@ -22,17 +23,19 @@ class ListFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_list, container, false)
 
-        val data = ArrayList<Share>()
-        for (i in 1..20) {
-            data.add(Share("ticker" + i.toString(), "name", i.toFloat(), i.toFloat()))
-        }
+//        val data = ArrayList<Share>()
+//        val tickers = Data.getTop15SP500Tickers()
+//        for (i in 0..14) {
+//            data.add(Share(tickers.get(i), "name", i.toFloat(), i.toFloat()))
+//        }
 
         val recyclerview = view.recycler_view
-        val adapter = ListAdapter(data)
+        val adapter = ListAdapter()
         recyclerview.adapter = adapter
         recyclerview.layoutManager = LinearLayoutManager(requireContext())
 
         val model: ShareViewModel by viewModels()
+        model.loadTop15SP500Shares()
         model.getShares().observe(viewLifecycleOwner, Observer{ shares ->
             adapter.refreshShares(shares)
         })

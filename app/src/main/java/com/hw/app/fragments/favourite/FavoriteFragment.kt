@@ -22,11 +22,6 @@ class FavoriteFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_favorite, container, false)
 
-//        val data = ArrayList<Share>()
-//        for (i in 1..20) {
-//            data.add(Share("ticker" + i.toString(), "name", i.toFloat(), i.toFloat()))
-//        }
-
         val recyclerview = view.recycler_view_fav
         val adapter = FavoriteAdapter()
         recyclerview.adapter = adapter

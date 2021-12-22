@@ -13,7 +13,8 @@ class ShareViewModel(application: Application) : AndroidViewModel(application) {
 
     init{
         val shareDao = ShareDatabase.getInstance(application).shareDao()
-        repository = ShareRepository(shareDao)
+        val cacheShareDao = ShareDatabase.getInstance(application).cacheShareDao()
+        repository = ShareRepository(shareDao, cacheShareDao)
         sharesFromDatabase = repository.allSharesFromDatabase
     }
 
@@ -23,6 +24,10 @@ class ShareViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getSharesFromDatabase(): LiveData<List<Share>> {
         return sharesFromDatabase
+    }
+
+    fun getRepository(): ShareRepository {
+        return repository
     }
 
     fun loadSharesFromApi(symbols: String) {
@@ -46,6 +51,12 @@ class ShareViewModel(application: Application) : AndroidViewModel(application) {
     fun insertShare(share: Share) {
         viewModelScope.launch {
             repository.insertShare(share)
+        }
+    }
+
+    fun loadTop15SP500Shares() {
+        viewModelScope.launch (Dispatchers.IO){
+            shares.postValue(repository.loadTop15SP500Shares())
         }
     }
 }

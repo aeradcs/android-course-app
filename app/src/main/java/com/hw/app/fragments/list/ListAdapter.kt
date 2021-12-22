@@ -11,7 +11,9 @@ import com.hw.app.R
 import com.hw.app.database.Share
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class ListAdapter(private var shareList: List<Share>): RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+
+    private var shareList = emptyList<Share>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context)
