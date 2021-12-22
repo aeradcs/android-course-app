@@ -55,7 +55,7 @@ class ShareRepository(private val shareDao: ShareDao, private val cacheShareDao:
             val cachedShares = cacheShareDao.findAll()
             var cachedShare: CacheShare
             for(i in 0 until cacheShareDao.countCachedRows()){
-                cachedShare = cachedShares.get(i)
+                cachedShare = cachedShares[i]
                 shares.add(Share(cachedShare.ticker, cachedShare.name, cachedShare.price, cachedShare.dayChange, cachedShare.logo))
             }
             return shares

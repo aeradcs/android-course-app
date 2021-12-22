@@ -6,11 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.hw.app.R
 import com.hw.app.database.Share
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.list_item.view.*
 import kotlinx.android.synthetic.main.list_item_fav.view.*
 
 class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.MyViewHolder>() {
@@ -38,18 +36,12 @@ class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.MyViewHolder>() {
             holder.itemView.percent_tv_fav.setTextColor(Color.parseColor("#27c42f"))
         }
         if(currentItem.logo != ""){
-//            Glide.with(holder.itemView)
-//                .load(currentItem.logo)
-//                .into(holder.itemView.logo_fav)
             Picasso.with(holder.itemView.context)
                 .load(currentItem.logo)
                 .placeholder(R.drawable.ic_no_image_foreground)
                 .error(R.drawable.ic_no_image_foreground)
                 .into(holder.itemView.logo_fav);
         }else{
-//            Glide.with(holder.itemView)
-//                .load(R.drawable.ic_no_logo)
-//                .into(holder.itemView.logo_fav)
             Picasso.with(holder.itemView.context)
                 .load(R.drawable.ic_no_image_foreground)
                 .placeholder(R.drawable.ic_no_image_foreground)

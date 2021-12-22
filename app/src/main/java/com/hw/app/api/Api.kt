@@ -26,7 +26,7 @@ object Api {
         else{
             val newList: MutableList<SymbolLookupInfo> = mutableListOf()
             for(i in 0 until 1){
-                newList.add(answer.result!!.get(i))
+                newList.add(answer.result!![i])
             }
             return SymbolLookup(newList, 1)
         }
@@ -34,29 +34,27 @@ object Api {
 
     fun getCompanyProfilesForTickers(tickers: List<String>): List<CompanyProfile2> {
         val answer: MutableList<CompanyProfile2> = mutableListOf()
-        for (i in 0 until tickers.size){
-            answer.add(apiClient.companyProfile2(symbol = tickers.get(i), isin = null, cusip = null))
+        for (i in tickers.indices){
+            answer.add(apiClient.companyProfile2(symbol = tickers[i], isin = null, cusip = null))
         }
         return answer
     }
 
     private fun getStockCandlesForTicker(ticker: String, resolution: String, from: Long, to: Long): StockCandles {
-        val answer = apiClient.stockCandles(ticker, resolution, from, to)
-        return answer
+        return apiClient.stockCandles(ticker, resolution, from, to)
     }
 
     fun getOneDayStockCandlesForTickers(tickers: List<String>): MutableList<StockCandles?> {
         val answer: MutableList<StockCandles?> = mutableListOf()
         val unixTimeTo = System.currentTimeMillis() / 1000L
-        val unixTimeFrom : Long
-        when (LocalDate.now().getDayOfWeek().value + 1) {
-            MONDAY -> unixTimeFrom = unixTimeTo - 86400 * 3
-            TUESDAY -> unixTimeFrom = unixTimeTo - 86400 * 4
-            else -> unixTimeFrom = unixTimeTo - 86400 * 2
+        val unixTimeFrom = when (LocalDate.now().dayOfWeek.value + 1) {
+            MONDAY -> unixTimeTo - 86400 * 3
+            TUESDAY -> unixTimeTo - 86400 * 4
+            else -> unixTimeTo - 86400 * 2
         }
-        for(i in 0 until tickers.size){
+        for(i in tickers.indices){
             try {
-                answer.add(getStockCandlesForTicker(tickers.get(i), "D", unixTimeFrom, unixTimeTo))
+                answer.add(getStockCandlesForTicker(tickers[i], "D", unixTimeFrom, unixTimeTo))
             }catch (e: Exception){
                 answer.add(null)
             }

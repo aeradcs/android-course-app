@@ -10,14 +10,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
 import com.hw.app.R
 import com.hw.app.database.Share
 import com.hw.app.database.ShareViewModel
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_item.view.*
 import kotlinx.android.synthetic.main.fragment_item.*
 import kotlinx.android.synthetic.main.list_item.view.*
-import kotlinx.android.synthetic.main.list_item_fav.*
 
 class ItemFragment : Fragment() {
 
@@ -29,11 +28,26 @@ class ItemFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_item, container, false)
 
-        view.ticker_item_tv.setText(args.currentItem.ticker)
-        view.name_item_tv.setText(args.currentItem.name)
-        view.price_item_tv.setText(args.currentItem.price.toString())
-        view.day_change_item_tv.setText(args.currentItem.dayChange.toString())
+        view.ticker_item_tv.text = args.currentItem.ticker
+        view.name_item_tv.text = args.currentItem.name
+        view.price_item_tv.text = args.currentItem.price.toString()
+        view.day_change_item_tv.text = args.currentItem.dayChange.toString()
         logo = args.currentItem.logo
+        if(logo != ""){
+            Picasso.with(view.context)
+                .load(logo)
+                .resize(400,400)
+                .placeholder(R.drawable.ic_no_image_foreground)
+                .error(R.drawable.ic_no_image_foreground)
+                .into(view.logo_item);
+        }else{
+            Picasso.with(view.context)
+                .load(R.drawable.ic_no_image_foreground)
+                .resize(400,400)
+                .placeholder(R.drawable.ic_no_image_foreground)
+                .error(R.drawable.ic_no_image_foreground)
+                .into(view.logo_item);
+        }
 
         if(args.currentItem.dayChange < 0){
             view.day_change_item_tv.setTextColor(Color.parseColor("#fc1d0d"))

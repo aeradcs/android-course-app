@@ -4,15 +4,12 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.hw.app.R
 import com.hw.app.database.Share
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item.view.*
-import kotlinx.android.synthetic.main.list_item_fav.view.*
 
 class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
@@ -39,18 +36,12 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
             holder.itemView.percent_tv.setTextColor(Color.parseColor("#27c42f"))
         }
         if(currentItem.logo != ""){
-//            Glide.with(holder.itemView)
-//                .load(currentItem.logo)
-//                .into(holder.itemView.logo)
             Picasso.with(holder.itemView.context)
                 .load(currentItem.logo)
                 .placeholder(R.drawable.ic_no_image_foreground)
                 .error(R.drawable.ic_no_image_foreground)
                 .into(holder.itemView.logo);
         }else{
-//            Glide.with(holder.itemView)
-//                .load(R.drawable.ic_no_logo)
-//                .into(holder.itemView.logo)
             Picasso.with(holder.itemView.context)
                 .load(R.drawable.ic_no_image_foreground)
                 .placeholder(R.drawable.ic_no_image_foreground)
@@ -73,17 +64,5 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         notifyDataSetChanged()
     }
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//        var ticker: TextView? = null
-//        var name: TextView? = null
-//        var price: TextView? = null
-//        var dayChange: TextView? = null
-//
-//        init{
-//            ticker = itemView.ticker_tv
-//            name = itemView.name_tv
-//            price = itemView.price_tv
-//            dayChange = itemView.day_change_tv
-//        }
-    }
+    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {}
 }
