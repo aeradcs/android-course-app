@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,10 +27,16 @@ import kotlinx.android.synthetic.main.fragment_item.*
 class ItemFragment : Fragment() {
 
     private val args by navArgs<ItemFragmentArgs>()
+    val model: ShareViewModel by viewModels()
+//    private lateinit var model: ShareViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_item, container, false)
+
+//        model = ViewModelProvider(this).get(ShareViewModel::class.java)
+
+
         view.ticker_item_tv.setText(args.currentItem.ticker)
         view.name_item_tv.setText(args.currentItem.name)
         view.price_item_tv.setText(args.currentItem.price.toString())
@@ -64,7 +71,7 @@ class ItemFragment : Fragment() {
             val price = priceText.toFloat()
             val dayChange = dayChangeText.toFloat()
             val share = Share(ticker, name, price, dayChange)
-//            model.deleteShare(share)
+            model.deleteShare(share)
             findNavController().navigate(R.id.action_item_fragment_to_favorite_fragment)
         }
     }
@@ -79,7 +86,7 @@ class ItemFragment : Fragment() {
             val price = priceText.toFloat()
             val dayChange = dayChangeText.toFloat()
             val share = Share(ticker, name, price, dayChange)
-//            model.insertShare(share)
+            model.insertShare(share)
             findNavController().navigate(R.id.action_item_fragment_to_favorite_fragment)
         }
     }

@@ -1,5 +1,7 @@
 package com.hw.app.database
 
+import android.app.Application
+import androidx.core.widget.ListViewAutoScrollHelper
 import androidx.lifecycle.*
 import com.hw.app.api.Api
 import com.hw.app.api.ApiAnswerConverter
@@ -7,11 +9,23 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class ShareViewModel() : ViewModel() {
+class ShareViewModel(application: Application) : AndroidViewModel(application) {
     private val shares: MutableLiveData<List<Share>> = MutableLiveData()
+    private val repository: ShareRepository
+    private val sharesFromDatabase: LiveData<List<Share>>
+
+    init{
+        val shareDao = ShareDatabase.getInstance(application).shareDao()
+        repository = ShareRepository(shareDao)
+        sharesFromDatabase = repository.allSharesFromDatabase
+    }
 
     fun getShares(): LiveData<List<Share>> {
         return shares
+    }
+
+    fun getSharesFromDatabase(): LiveData<List<Share>> {
+        return sharesFromDatabase
     }
 
     fun loadSharesFromDatabase() {
@@ -32,7 +46,6 @@ class ShareViewModel() : ViewModel() {
             }
             catch (e: Exception){
                 val list: MutableList<Share> = mutableListOf()
-//                list.add(Share("","", 0.0F, 0.0F))
                 list
             })
 
@@ -41,24 +54,14 @@ class ShareViewModel() : ViewModel() {
     }
 
     fun deleteShare(share: Share) {
-        viewModelScope.launch(Dispatchers.IO){
-
+        viewModelScope.launch (Dispatchers.IO){
+            repository.deleteShare(share)
        }
     }
 
     fun insertShare(share: Share) {
-        viewModelScope.launch(Dispatchers.IO){
-
+        viewModelScope.launch (Dispatchers.IO){
+            repository.insertShare(share)
         }
     }
 }
-
-//class WordViewModelFactory(private val repository: ShareRepository) : ViewModelProvider.Factory {
-//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        if (modelClass.isAssignableFrom(ShareViewModel::class.java)) {
-//            @Suppress("UNCHECKED_CAST")
-//            return ShareViewModel(repository) as T
-//        }
-//        throw IllegalArgumentException("Unknown ViewModel class")
-//    }
-//}

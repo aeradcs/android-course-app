@@ -15,9 +15,11 @@ import com.hw.app.fragments.list.ListAdapter
 import kotlinx.android.synthetic.main.fragment_favorite.view.*
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 
 
 class FavoriteFragment : Fragment() {
+//    private lateinit var model: ShareViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,18 +27,20 @@ class FavoriteFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_favorite, container, false)
 
-        val data = ArrayList<Share>()
-        for (i in 1..20) {
-            data.add(Share("ticker" + i.toString(), "name", i.toFloat(), i.toFloat()))
-        }
+//        val data = ArrayList<Share>()
+//        for (i in 1..20) {
+//            data.add(Share("ticker" + i.toString(), "name", i.toFloat(), i.toFloat()))
+//        }
 
         val recyclerview = view.recycler_view_fav
-        val adapter = FavoriteAdapter(data)
+        val adapter = FavoriteAdapter()
         recyclerview.adapter = adapter
         recyclerview.layoutManager = LinearLayoutManager(requireContext())
 
         val model: ShareViewModel by viewModels()
-        model.getShares().observe(viewLifecycleOwner, Observer{ shares ->
+//        model = ViewModelProvider(this).get(ShareViewModel::class.java)
+
+        model.getSharesFromDatabase().observe(viewLifecycleOwner, Observer{ shares ->
             adapter.refreshShares(shares)
         })
 
