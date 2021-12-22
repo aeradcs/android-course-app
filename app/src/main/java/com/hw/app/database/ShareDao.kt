@@ -9,7 +9,7 @@ interface ShareDao {
     fun findAll(): LiveData<List<Share>>
 
     @Query("SELECT count(*) FROM share_table WHERE ticker LIKE :ticker")
-    suspend fun containsShare(ticker: String) : Int
+    suspend fun countRows(ticker: String) : Int
 
     @Insert
     suspend fun insertShare(share: Share)

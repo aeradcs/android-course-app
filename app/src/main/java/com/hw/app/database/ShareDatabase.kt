@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.hw.app.database.cache.CacheShare
 import com.hw.app.database.cache.CacheShareDao
 
-@Database(entities = [Share::class, CacheShare::class], version = 2, exportSchema = false)
+@Database(entities = [Share::class, CacheShare::class], version = 3, exportSchema = false)
 abstract class ShareDatabase : RoomDatabase() {
     abstract fun shareDao(): ShareDao
     abstract fun cacheShareDao(): CacheShareDao

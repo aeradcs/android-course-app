@@ -11,13 +11,13 @@ class ShareRepository(private val shareDao: ShareDao, private val cacheShareDao:
     val allSharesFromDatabase: LiveData<List<Share>> = shareDao.findAll()
 
     suspend fun insertShare(share: Share){
-        if(shareDao.containsShare(share.ticker) == 0){
+        if(shareDao.countRows(share.ticker) == 0){
             shareDao.insertShare(share)
         }
     }
 
     suspend fun deleteShare(share: Share){
-        if(shareDao.containsShare(share.ticker) == 1){
+        if(shareDao.countRows(share.ticker) == 1){
             shareDao.deleteShare(share)
         }
     }
@@ -30,7 +30,8 @@ class ShareRepository(private val shareDao: ShareDao, private val cacheShareDao:
         val stockCandles = Api.getOneDayStockCandlesForTickers(tickers)//to get price and dayChange
         val prices = ApiAnswerConverter.parsePricesFromStockCandles(stockCandles)
         val dayChanges = ApiAnswerConverter.parseDayChangesFromStockCandles(stockCandles)
-        return ApiAnswerConverter.convertArraysToShares(tickers, names, prices, dayChanges)
+        val logos = ApiAnswerConverter.parseLogosFromCompanyProfiles(companyProfiles)
+        return ApiAnswerConverter.convertArraysToShares(tickers, names, prices, dayChanges, logos)
     }
 
     suspend fun loadTop15SP500Shares(): List<Share> {
@@ -43,27 +44,28 @@ class ShareRepository(private val shareDao: ShareDao, private val cacheShareDao:
             val stockCandles = Api.getOneDayStockCandlesForTickers(tickers)//to get price and dayChange
             val prices = ApiAnswerConverter.parsePricesFromStockCandles(stockCandles)
             val dayChanges = ApiAnswerConverter.parseDayChangesFromStockCandles(stockCandles)
+            val logos = ApiAnswerConverter.parseLogosFromCompanyProfiles(companyProfiles)
 
             //save to cache
-            saveTop15SP500SharesToCache(currentTime, tickers, names, prices, dayChanges)
+            saveTop15SP500SharesToCache(currentTime, tickers, names, prices, dayChanges, logos)
 
-            return ApiAnswerConverter.convertArraysToShares(tickers, names, prices, dayChanges)
+            return ApiAnswerConverter.convertArraysToShares(tickers, names, prices, dayChanges, logos)
         }else{
             val shares : MutableList<Share> = mutableListOf()
             val cachedShares = cacheShareDao.findAll()
             var cachedShare: CacheShare
             for(i in 0 until cacheShareDao.countCachedRows()){
                 cachedShare = cachedShares.get(i)
-                shares.add(Share(cachedShare.ticker, cachedShare.name, cachedShare.price, cachedShare.dayChange))
+                shares.add(Share(cachedShare.ticker, cachedShare.name, cachedShare.price, cachedShare.dayChange, cachedShare.logo))
             }
             return shares
         }
     }
 
     private suspend fun saveTop15SP500SharesToCache(currentTime: Long, tickers: List<String>, names: List<String>,
-                                                    prices: List<Float?>, dayChanges: List<Float?>) {
+                                                    prices: List<Float?>, dayChanges: List<Float?>, logos: List<String>) {
         for(i in tickers.indices){
-            cacheShareDao.insertShare(CacheShare(tickers[i], names[i], prices[i]!!, dayChanges[i]!!, currentTime))
+            cacheShareDao.insertShare(CacheShare(tickers[i], names[i], prices[i]!!, dayChanges[i]!!, currentTime, logos[i]))
         }
     }
 }

@@ -10,16 +10,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.hw.app.R
 import com.hw.app.database.Share
 import com.hw.app.database.ShareViewModel
 import kotlinx.android.synthetic.main.fragment_item.view.*
 import kotlinx.android.synthetic.main.fragment_item.*
+import kotlinx.android.synthetic.main.list_item.view.*
+import kotlinx.android.synthetic.main.list_item_fav.*
 
 class ItemFragment : Fragment() {
 
     private val args by navArgs<ItemFragmentArgs>()
     private val model: ShareViewModel by viewModels()
+    lateinit var logo: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -29,6 +33,7 @@ class ItemFragment : Fragment() {
         view.name_item_tv.setText(args.currentItem.name)
         view.price_item_tv.setText(args.currentItem.price.toString())
         view.day_change_item_tv.setText(args.currentItem.dayChange.toString())
+        logo = args.currentItem.logo
 
         if(args.currentItem.dayChange < 0){
             view.day_change_item_tv.setTextColor(Color.parseColor("#fc1d0d"))
@@ -58,7 +63,7 @@ class ItemFragment : Fragment() {
         if(isValidInput(ticker, name, priceText, dayChangeText)){
             val price = priceText.toFloat()
             val dayChange = dayChangeText.toFloat()
-            val share = Share(ticker, name, price, dayChange)
+            val share = Share(ticker, name, price, dayChange, logo)
             model.deleteShare(share)
             findNavController().navigate(R.id.action_item_fragment_to_favorite_fragment)
         }
@@ -73,7 +78,7 @@ class ItemFragment : Fragment() {
         if(isValidInput(ticker, name, priceText, dayChangeText)){
             val price = priceText.toFloat()
             val dayChange = dayChangeText.toFloat()
-            val share = Share(ticker, name, price, dayChange)
+            val share = Share(ticker, name, price, dayChange, logo)
             model.insertShare(share)
             findNavController().navigate(R.id.action_item_fragment_to_favorite_fragment)
         }

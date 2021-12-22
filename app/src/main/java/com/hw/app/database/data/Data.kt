@@ -8,7 +8,7 @@ object Data {
         tickers.add("AMZN")
         tickers.add("FB")
         tickers.add("JPM")
-        tickers.add("BRK.B")
+        tickers.add("PFE")
         tickers.add("JNJ")
         tickers.add("GOOG")
         tickers.add("GOOGL")

@@ -23,6 +23,14 @@ object ApiAnswerConverter {
         return names
     }
 
+    fun parseLogosFromCompanyProfiles(companyProfiles: List<CompanyProfile2>): List<String>{
+        val logos: MutableList<String> = mutableListOf()
+        for (i in 0 until companyProfiles.size){
+            logos.add(companyProfiles.get(i).logo.toString())
+        }
+        return logos
+    }
+
     fun parsePricesFromStockCandles(stockCandles: MutableList<StockCandles?>): MutableList<Float?> {
         val prices: MutableList<Float?> = mutableListOf()
         for (i in 0 until stockCandles.size) {
@@ -48,10 +56,10 @@ object ApiAnswerConverter {
         return dayChanges
     }
 
-    fun convertArraysToShares(tickers: List<String>, names: List<String>, prices: List<Float?>, dayChanges: List<Float?>): List<Share> {
+    fun convertArraysToShares(tickers: List<String>, names: List<String>, prices: List<Float?>, dayChanges: List<Float?>, logos: List<String>): List<Share> {
         val shares: MutableList<Share> = mutableListOf()
         for(i in 0 until tickers.size){
-            shares.add(Share(tickers.get(i), names.get(i), prices.get(i)!!, dayChanges.get(i)!!))
+            shares.add(Share(tickers.get(i), names.get(i), prices.get(i)!!, dayChanges.get(i)!!, logos.get(i)))
         }
         return shares
     }

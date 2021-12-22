@@ -13,5 +13,6 @@ data class Share (
     @ColumnInfo(name = "ticker") val ticker: String,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "price") var price : Float,
-    @ColumnInfo(name = "day_change") var dayChange : Float
+    @ColumnInfo(name = "day_change") var dayChange : Float,
+    @ColumnInfo(name = "logo") val logo: String
     ) : Parcelable
