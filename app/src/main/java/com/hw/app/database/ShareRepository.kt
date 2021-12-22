@@ -9,7 +9,6 @@ import com.hw.app.database.data.Data
 
 class ShareRepository(private val shareDao: ShareDao, private val cacheShareDao: CacheShareDao) {
     val allSharesFromDatabase: LiveData<List<Share>> = shareDao.findAll()
-//    val cachedSharesFromDatabase: List<CacheShare> = emptyList()
 
     suspend fun insertShare(share: Share){
         if(shareDao.containsShare(share.ticker) == 0){
@@ -38,21 +37,18 @@ class ShareRepository(private val shareDao: ShareDao, private val cacheShareDao:
         //if last rest api call was made more than one day ago then make new request else fetch data from cache
         val currentTime = (System.currentTimeMillis() / 1000L)
         if(cacheShareDao.countCachedRows() == 0 || ((currentTime - cacheShareDao.getTime()) > 86400L)){
-            println("MAKE NEW REST API CALL  ")
-            if(cacheShareDao.countCachedRows() != 0){
-                println("MAKE NEW REST API CALL  " + currentTime + "  " + cacheShareDao.getTime())
-            }
             val tickers = Data.getTop15SP500Tickers()
             val companyProfiles = Api.getCompanyProfilesForTickers(tickers)//to get company name by tickers
             val names = ApiAnswerConverter.parseNamesFromCompanyProfiles(companyProfiles)
             val stockCandles = Api.getOneDayStockCandlesForTickers(tickers)//to get price and dayChange
             val prices = ApiAnswerConverter.parsePricesFromStockCandles(stockCandles)
             val dayChanges = ApiAnswerConverter.parseDayChangesFromStockCandles(stockCandles)
+
             //save to cache
             saveTop15SP500SharesToCache(currentTime, tickers, names, prices, dayChanges)
+
             return ApiAnswerConverter.convertArraysToShares(tickers, names, prices, dayChanges)
         }else{
-            println("FETCH DATA FROM CACHE")
             val shares : MutableList<Share> = mutableListOf()
             val cachedShares = cacheShareDao.findAll()
             var cachedShare: CacheShare
@@ -64,13 +60,10 @@ class ShareRepository(private val shareDao: ShareDao, private val cacheShareDao:
         }
     }
 
-    suspend fun saveTop15SP500SharesToCache(currentTime: Long, tickers: List<String>, names: List<String>,
-                                    prices: List<Float?>, dayChanges: List<Float?>) {
-        val shares: MutableList<CacheShare> = mutableListOf()
-        for(i in 0 until tickers.size){
-//            shares.add()
-//            println("\n\n" + shares.get(i))
-            cacheShareDao.insertShare(CacheShare(tickers.get(i), names.get(i), prices.get(i)!!, dayChanges.get(i)!!, currentTime))
+    private suspend fun saveTop15SP500SharesToCache(currentTime: Long, tickers: List<String>, names: List<String>,
+                                                    prices: List<Float?>, dayChanges: List<Float?>) {
+        for(i in tickers.indices){
+            cacheShareDao.insertShare(CacheShare(tickers[i], names[i], prices[i]!!, dayChanges[i]!!, currentTime))
         }
     }
 }

@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_item.*
 class ItemFragment : Fragment() {
 
     private val args by navArgs<ItemFragmentArgs>()
-    val model: ShareViewModel by viewModels()
+    private val model: ShareViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

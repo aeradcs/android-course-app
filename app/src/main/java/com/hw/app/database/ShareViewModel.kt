@@ -26,10 +26,6 @@ class ShareViewModel(application: Application) : AndroidViewModel(application) {
         return sharesFromDatabase
     }
 
-    fun getRepository(): ShareRepository {
-        return repository
-    }
-
     fun loadSharesFromApi(symbols: String) {
         viewModelScope.launch (Dispatchers.IO){
             shares.postValue(try {
