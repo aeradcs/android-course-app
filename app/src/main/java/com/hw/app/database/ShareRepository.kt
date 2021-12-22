@@ -37,9 +37,9 @@ class ShareRepository(private val shareDao: ShareDao, private val cacheShareDao:
     suspend fun loadTop15SP500Shares(): List<Share> {
         //if last rest api call was made more than one day ago then make new request else fetch data from cache
         val currentTime = (System.currentTimeMillis() / 1000L)
-        if(cacheShareDao.countCachedRows() == 0 || ((currentTime - cacheShareDao.getTime()) > 86400L)){
+        if(cacheShareDao.countCachedRows() == 0 || ((currentTime - cacheShareDao.getTime()) > Api.MILLISECONDS_IN_DAY)){
             val tickers = Data.getTop15SP500Tickers()
-            val companyProfiles = Api.getCompanyProfilesForTickers(tickers)//to get company name by tickers
+            val companyProfiles = Api.getCompanyProfilesForTickers(tickers)//to get company name and logo by tickers
             val names = ApiAnswerConverter.parseNamesFromCompanyProfiles(companyProfiles)
             val stockCandles = Api.getOneDayStockCandlesForTickers(tickers)//to get price and dayChange
             val prices = ApiAnswerConverter.parsePricesFromStockCandles(stockCandles)

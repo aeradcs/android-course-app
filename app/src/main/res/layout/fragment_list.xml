@@ -24,7 +24,7 @@
             android:layout_marginStart="24dp"
             android:layout_weight="1"
             android:clickable="true"
-            android:text="Favorite"
+            android:text="@string/favorite"
             android:textSize="18sp"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="@+id/stock_tv"
@@ -38,7 +38,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:layout_weight="1"
-            android:text="Stock"
+            android:text="@string/stock"
             android:textColor="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -65,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:text="Search"
+        android:text="@string/search"
         app:layout_constraintBottom_toBottomOf="@+id/find_et"
         app:layout_constraintStart_toEndOf="@+id/find_et" />
 
@@ -74,8 +74,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Type ticker or name"
-        android:inputType="textPersonName"
+        android:hint="@string/type_ticker_or_name"
+        android:inputType="text"
         app:layout_constraintStart_toStartOf="@+id/constraint_layout"
         app:layout_constraintTop_toBottomOf="@+id/constraint_layout" />
 

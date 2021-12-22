@@ -12,6 +12,7 @@ import java.util.Calendar.*
 
 object Api {
     private val apiClient : DefaultApi
+    const val MILLISECONDS_IN_DAY = 86400
 
     init{
         ApiClient.apiKey["token"] = "c6idegqad3i8jt9dpdn0"
@@ -48,9 +49,9 @@ object Api {
         val answer: MutableList<StockCandles?> = mutableListOf()
         val unixTimeTo = System.currentTimeMillis() / 1000L
         val unixTimeFrom = when (LocalDate.now().dayOfWeek.value + 1) {
-            MONDAY -> unixTimeTo - 86400 * 3
-            TUESDAY -> unixTimeTo - 86400 * 4
-            else -> unixTimeTo - 86400 * 2
+            MONDAY -> unixTimeTo - MILLISECONDS_IN_DAY * 3
+            TUESDAY -> unixTimeTo - MILLISECONDS_IN_DAY * 4
+            else -> unixTimeTo - MILLISECONDS_IN_DAY * 2
         }
         for(i in tickers.indices){
             try {

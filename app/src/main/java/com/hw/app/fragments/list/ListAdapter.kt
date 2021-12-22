@@ -4,12 +4,14 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.hw.app.R
 import com.hw.app.database.Share
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item.view.*
+import kotlinx.android.synthetic.main.list_item_fav.view.*
 
 class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
@@ -29,11 +31,11 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         holder.itemView.price_tv.text = currentItem.price.toString()
         holder.itemView.day_change_tv.text = currentItem.dayChange.toString()
         if(currentItem.dayChange.toString().toFloat() < 0){
-            holder.itemView.day_change_tv.setTextColor(Color.parseColor("#fc1d0d"))
-            holder.itemView.percent_tv.setTextColor(Color.parseColor("#fc1d0d"))
+            holder.itemView.day_change_tv.setTextColor(ResourcesCompat.getColor(holder.itemView.resources, R.color.red, null))
+            holder.itemView.percent_tv.setTextColor(ResourcesCompat.getColor(holder.itemView.resources, R.color.red, null))
         }else{
-            holder.itemView.day_change_tv.setTextColor(Color.parseColor("#27c42f"))
-            holder.itemView.percent_tv.setTextColor(Color.parseColor("#27c42f"))
+            holder.itemView.day_change_tv.setTextColor(ResourcesCompat.getColor(holder.itemView.resources, R.color.green, null))
+            holder.itemView.percent_tv.setTextColor(ResourcesCompat.getColor(holder.itemView.resources, R.color.green, null))
         }
         if(currentItem.logo != ""){
             Picasso.with(holder.itemView.context)

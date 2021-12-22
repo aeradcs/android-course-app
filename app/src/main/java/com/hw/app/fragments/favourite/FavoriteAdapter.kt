@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.hw.app.R
@@ -29,11 +30,11 @@ class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.MyViewHolder>() {
         holder.itemView.price_tv_fav.text = currentItem.price.toString()
         holder.itemView.day_change_tv_fav.text = currentItem.dayChange.toString()
         if(currentItem.dayChange.toString().toFloat() < 0){
-            holder.itemView.day_change_tv_fav.setTextColor(Color.parseColor("#fc1d0d"))
-            holder.itemView.percent_tv_fav.setTextColor(Color.parseColor("#fc1d0d"))
+            holder.itemView.day_change_tv_fav.setTextColor(ResourcesCompat.getColor(holder.itemView.resources, R.color.red, null))
+            holder.itemView.percent_tv_fav.setTextColor(ResourcesCompat.getColor(holder.itemView.resources, R.color.red, null))
         }else{
-            holder.itemView.day_change_tv_fav.setTextColor(Color.parseColor("#27c42f"))
-            holder.itemView.percent_tv_fav.setTextColor(Color.parseColor("#27c42f"))
+            holder.itemView.day_change_tv_fav.setTextColor(ResourcesCompat.getColor(holder.itemView.resources, R.color.green, null))
+            holder.itemView.percent_tv_fav.setTextColor(ResourcesCompat.getColor(holder.itemView.resources, R.color.green, null))
         }
         if(currentItem.logo != ""){
             Picasso.with(holder.itemView.context)

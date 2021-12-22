@@ -9,7 +9,7 @@ import java.lang.Exception
 object ApiAnswerConverter {
     fun parseTickerFromSymbolLookup(answer: SymbolLookup): List<String>{
         val ticker: MutableList<String> = mutableListOf()
-        for (i in 0 until answer.result!!.size){
+        for (i in answer.result!!.indices){
             ticker.add(answer.result!![i.toInt()].symbol.toString())
         }
         return ticker
@@ -17,7 +17,7 @@ object ApiAnswerConverter {
 
     fun parseNamesFromCompanyProfiles(companyProfiles: List<CompanyProfile2>): List<String>{
         val names: MutableList<String> = mutableListOf()
-        for (i in 0 until companyProfiles.size){
+        for (i in companyProfiles.indices){
             names.add(companyProfiles.get(i).name.toString())
         }
         return names
@@ -25,7 +25,7 @@ object ApiAnswerConverter {
 
     fun parseLogosFromCompanyProfiles(companyProfiles: List<CompanyProfile2>): List<String>{
         val logos: MutableList<String> = mutableListOf()
-        for (i in 0 until companyProfiles.size){
+        for (i in companyProfiles.indices){
             logos.add(companyProfiles.get(i).logo.toString())
         }
         return logos
@@ -45,10 +45,12 @@ object ApiAnswerConverter {
 
     fun parseDayChangesFromStockCandles(stockCandles: MutableList<StockCandles?>): MutableList<Float?> {
         val dayChanges: MutableList<Float?> = mutableListOf()
+        var dayChange: Float
         for (i in 0 until stockCandles.size) {
             try {
                 //get dayChange in percents
-                dayChanges.add((stockCandles.get(i)!!.c!!.get(1) * 100 / stockCandles.get(i)!!.c!!.get(0)) - 100F)
+                dayChange = (stockCandles[i]!!.c!![1] * 100 / stockCandles[i]!!.c!![0]) - 100F
+                dayChanges.add(String.format("%.2f", dayChange).toFloat())
             }catch (e: Exception){
                 dayChanges.add(null)
             }
@@ -58,8 +60,8 @@ object ApiAnswerConverter {
 
     fun convertArraysToShares(tickers: List<String>, names: List<String>, prices: List<Float?>, dayChanges: List<Float?>, logos: List<String>): List<Share> {
         val shares: MutableList<Share> = mutableListOf()
-        for(i in 0 until tickers.size){
-            shares.add(Share(tickers.get(i), names.get(i), prices.get(i)!!, dayChanges.get(i)!!, logos.get(i)))
+        for(i in tickers.indices){
+            shares.add(Share(tickers[i], names[i], prices[i]!!, dayChanges[i]!!, logos[i]))
         }
         return shares
     }

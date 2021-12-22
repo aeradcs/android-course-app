@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -17,6 +18,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_item.view.*
 import kotlinx.android.synthetic.main.fragment_item.*
 import kotlinx.android.synthetic.main.list_item.view.*
+import kotlinx.android.synthetic.main.list_item_fav.view.*
 
 class ItemFragment : Fragment() {
 
@@ -32,7 +34,22 @@ class ItemFragment : Fragment() {
         view.name_item_tv.text = args.currentItem.name
         view.price_item_tv.text = args.currentItem.price.toString()
         view.day_change_item_tv.text = args.currentItem.dayChange.toString()
+        setDayChangeColor(view)
         logo = args.currentItem.logo
+        loadLogo(view)
+
+        view.add_to_fav_button.setOnClickListener {
+            insertItemInDatabase()
+        }
+
+        view.del_from_fav_button.setOnClickListener {
+            deleteItemFromDatabase()
+        }
+
+        return view
+    }
+
+    private fun loadLogo(view: View) {
         if(logo != ""){
             Picasso.with(view.context)
                 .load(logo)
@@ -48,24 +65,16 @@ class ItemFragment : Fragment() {
                 .error(R.drawable.ic_no_image_foreground)
                 .into(view.logo_item);
         }
+    }
 
+    private fun setDayChangeColor(view: View) {
         if(args.currentItem.dayChange < 0){
-            view.day_change_item_tv.setTextColor(Color.parseColor("#fc1d0d"))
-            view.percent_item_tv.setTextColor(Color.parseColor("#fc1d0d"))
+            view.day_change_item_tv.setTextColor(ResourcesCompat.getColor(view.resources, R.color.red, null))
+            view.percent_item_tv.setTextColor(ResourcesCompat.getColor(view.resources, R.color.red, null))
         }else{
-            view.day_change_item_tv.setTextColor(Color.parseColor("#27c42f"))
-            view.percent_item_tv.setTextColor(Color.parseColor("#27c42f"))
+            view.day_change_item_tv.setTextColor(ResourcesCompat.getColor(view.resources, R.color.green, null))
+            view.percent_item_tv.setTextColor(ResourcesCompat.getColor(view.resources, R.color.green, null))
         }
-
-        view.add_to_fav_button.setOnClickListener {
-            insertItemInDatabase()
-        }
-
-        view.del_from_fav_button.setOnClickListener {
-            deleteItemFromDatabase()
-        }
-
-        return view
     }
 
     private fun deleteItemFromDatabase() {
