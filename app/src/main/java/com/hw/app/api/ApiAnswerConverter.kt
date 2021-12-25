@@ -57,10 +57,10 @@ object ApiAnswerConverter {
         return dayChanges
     }
 
-    fun convertArraysToShares(tickers: List<String>, names: List<String>, prices: List<Float?>, dayChanges: List<Float?>, logos: List<String>): List<Share> {
+    fun convertArraysToShares(tickers: List<String>, names: List<String>, prices: List<Float>, dayChanges: List<Float>, logos: List<String>): List<Share> {
         val shares: MutableList<Share> = mutableListOf()
         for(i in tickers.indices){
-            shares.add(Share(tickers[i], names[i], prices[i]!!, dayChanges[i]!!, logos[i]))
+            shares.add(Share(tickers[i], names[i], prices[i], dayChanges[i], logos[i]))
         }
         return shares
     }
