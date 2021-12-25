@@ -10,7 +10,7 @@ object ApiAnswerConverter {
     fun parseTickerFromSymbolLookup(answer: SymbolLookup): List<String>{
         val ticker: MutableList<String> = mutableListOf()
         for (i in answer.result!!.indices){
-            ticker.add(answer.result!![i.toInt()].symbol.toString())
+            ticker.add(answer.result!![i].symbol.toString())
         }
         return ticker
     }
@@ -18,7 +18,7 @@ object ApiAnswerConverter {
     fun parseNamesFromCompanyProfiles(companyProfiles: List<CompanyProfile2>): List<String>{
         val names: MutableList<String> = mutableListOf()
         for (i in companyProfiles.indices){
-            names.add(companyProfiles.get(i).name.toString())
+            names.add(companyProfiles[i].name.toString())
         }
         return names
     }
@@ -26,33 +26,32 @@ object ApiAnswerConverter {
     fun parseLogosFromCompanyProfiles(companyProfiles: List<CompanyProfile2>): List<String>{
         val logos: MutableList<String> = mutableListOf()
         for (i in companyProfiles.indices){
-            logos.add(companyProfiles.get(i).logo.toString())
+            logos.add(companyProfiles[i].logo.toString())
         }
         return logos
     }
 
-    fun parsePricesFromStockCandles(stockCandles: MutableList<StockCandles?>): MutableList<Float?> {
-        val prices: MutableList<Float?> = mutableListOf()
+    fun parsePricesFromStockCandles(stockCandles: MutableList<StockCandles>): MutableList<Float> {
+        val prices: MutableList<Float> = mutableListOf()
         for (i in 0 until stockCandles.size) {
-            try {
-                prices.add(stockCandles.get(i)!!.c!!.get(1))
+            try{
+                prices.add(stockCandles[i].c!![1])
             }catch (e: Exception){
-                prices.add(null)
+                prices.add(0F)
             }
         }
         return prices
     }
 
-    fun parseDayChangesFromStockCandles(stockCandles: MutableList<StockCandles?>): MutableList<Float?> {
-        val dayChanges: MutableList<Float?> = mutableListOf()
+    fun parseDayChangesFromStockCandles(stockCandles: MutableList<StockCandles>): MutableList<Float> {
+        val dayChanges: MutableList<Float> = mutableListOf()
         var dayChange: Float
         for (i in 0 until stockCandles.size) {
-            try {
-                //get dayChange in percents
-                dayChange = (stockCandles[i]!!.c!![1] * 100 / stockCandles[i]!!.c!![0]) - 100F
+            try {//get dayChange in percents
+                dayChange = (stockCandles[i].c!![1] * 100 / stockCandles[i].c!![0]) - 100F
                 dayChanges.add(String.format("%.2f", dayChange).toFloat())
             }catch (e: Exception){
-                dayChanges.add(null)
+                dayChanges.add(0F)
             }
         }
         return dayChanges

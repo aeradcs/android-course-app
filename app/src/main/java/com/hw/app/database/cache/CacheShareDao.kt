@@ -21,4 +21,7 @@ interface CacheShareDao {
 
     @Delete
     suspend fun deleteShare(cacheShare: CacheShare)
+
+    @Query("delete from cache_table")
+    suspend fun del()
 }
