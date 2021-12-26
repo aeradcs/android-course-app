@@ -1,6 +1,7 @@
 package com.hw.app.database
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -10,6 +11,7 @@ class ShareViewModel(application: Application) : AndroidViewModel(application) {
     private val shares: MutableLiveData<List<Share>> = MutableLiveData()
     private val repository: ShareRepository
     private val sharesFromDatabase: LiveData<List<Share>>
+    var status = MutableLiveData<Boolean?>()
 
     init{
         val shareDao = ShareDatabase.getInstance(application).shareDao()
@@ -32,8 +34,7 @@ class ShareViewModel(application: Application) : AndroidViewModel(application) {
                 repository.loadSharesFromApi(symbols)
             }
             catch (e: Exception){
-                val list: MutableList<Share> = mutableListOf()
-                list
+                mutableListOf()
             })
         }
     }
@@ -52,7 +53,12 @@ class ShareViewModel(application: Application) : AndroidViewModel(application) {
 
     fun loadTop15SP500Shares() {
         viewModelScope.launch (Dispatchers.IO){
-            shares.postValue(repository.loadTop15SP500Shares())
+            shares.postValue(try{
+                repository.loadTop15SP500Shares()
+            }catch (e: Exception){
+                status.postValue(true)
+                mutableListOf()
+            })
         }
     }
 }

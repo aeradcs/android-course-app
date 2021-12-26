@@ -28,6 +28,12 @@ class ListFragment : Fragment() {
 
         val model: ShareViewModel by viewModels()
         model.loadTop15SP500Shares()
+        model.status.observe(viewLifecycleOwner, Observer { status ->
+            status?.let {
+                view.help_message.text = "Try again in 2 minutes. Api does not respond."
+                model.status.value = null
+            }
+        })
         model.getShares().observe(viewLifecycleOwner, Observer{ shares ->
             adapter.refreshShares(shares)
         })
