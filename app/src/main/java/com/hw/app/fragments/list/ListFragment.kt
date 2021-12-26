@@ -5,11 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hw.app.R
+import com.hw.app.database.Share
 import com.hw.app.database.ShareViewModel
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
@@ -28,18 +31,30 @@ class ListFragment : Fragment() {
 
         val model: ShareViewModel by viewModels()
         model.loadTop15SP500Shares()
+
         model.status.observe(viewLifecycleOwner, Observer { status ->
             status?.let {
-                view.help_message.text = "Try again in 2 minutes. Api does not respond."
+                view.progress_bar.visibility = ProgressBar.INVISIBLE
+                view.help_message.text = getString(R.string.api_not_responsible)
                 model.status.value = null
             }
         })
+        model.isLoading.observe(viewLifecycleOwner, Observer { isLoading ->
+            isLoading?.let {
+                view.progress_bar.visibility = ProgressBar.VISIBLE
+                model.isLoading.value = null
+            }
+        })
+
         model.getShares().observe(viewLifecycleOwner, Observer{ shares ->
+            view.recycler_view.visibility = View.VISIBLE
             adapter.refreshShares(shares)
+            view.progress_bar.visibility = ProgressBar.INVISIBLE
         })
 
         view.search_button.setOnClickListener {
             if(!view.find_et.text.isEmpty()){
+                view.recycler_view.visibility = View.INVISIBLE
                 model.loadSharesFromApi(view.find_et.text.toString())
             }
         }
