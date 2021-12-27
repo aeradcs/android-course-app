@@ -45,12 +45,11 @@ object Api {
         return apiClient.stockCandles(ticker, resolution, from, to)
     }
 
-    fun getOneDayStockCandlesForTickers(tickers: List<String>): MutableList<StockCandles> {
+    fun getOneDayStockCandlesForTickers(tickers: List<String>): List<StockCandles> {
         val answer: MutableList<StockCandles> = mutableListOf()
         val unixTimeTo = System.currentTimeMillis() / 1000L
         var unixTimeFrom = when (LocalDate.now().dayOfWeek.value + 1) {
-            SUNDAY -> unixTimeTo - MILLISECONDS_IN_DAY * 3
-            MONDAY -> unixTimeTo - MILLISECONDS_IN_DAY * 3
+            SUNDAY, MONDAY -> unixTimeTo - MILLISECONDS_IN_DAY * 3
             else -> unixTimeTo - MILLISECONDS_IN_DAY * 2
         }
         for(i in tickers.indices){

@@ -11,15 +11,11 @@ class ShareRepository(private val shareDao: ShareDao, private val cacheShareDao:
     val allSharesFromDatabase: LiveData<List<Share>> = shareDao.findAll()
 
     suspend fun insertShare(share: Share){
-        if(shareDao.countRows(share.ticker) == 0){
             shareDao.insertShare(share)
-        }
     }
 
     suspend fun deleteShare(share: Share){
-        if(shareDao.countRows(share.ticker) == 1){
             shareDao.deleteShare(share)
-        }
     }
 
     fun loadSharesFromApi(symbols: String): List<Share> {

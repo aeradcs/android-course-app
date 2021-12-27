@@ -6,10 +6,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class ShareViewModel(application: Application) : AndroidViewModel(application) {
+class ListViewModel(application: Application) : AndroidViewModel(application) {
     private val shares: MutableLiveData<List<Share>> = MutableLiveData()
     private val repository: ShareRepository
-    private val sharesFromDatabase: LiveData<List<Share>>
     var status = MutableLiveData<Boolean?>()
     var isLoading = MutableLiveData<Boolean?>()
 
@@ -17,7 +16,6 @@ class ShareViewModel(application: Application) : AndroidViewModel(application) {
         val shareDao = ShareDatabase.getInstance(application).shareDao()
         val cacheShareDao = ShareDatabase.getInstance(application).cacheShareDao()
         repository = ShareRepository(shareDao, cacheShareDao)
-        sharesFromDatabase = repository.allSharesFromDatabase
     }
 
     fun getShares(): LiveData<List<Share>> {
@@ -26,10 +24,6 @@ class ShareViewModel(application: Application) : AndroidViewModel(application) {
 
     fun setShares(shares: MutableLiveData<List<Share>>) {
         shares.postValue(mutableListOf())
-    }
-
-    fun getSharesFromDatabase(): LiveData<List<Share>> {
-        return sharesFromDatabase
     }
 
     fun loadSharesFromApi(symbols: String) {
@@ -41,18 +35,6 @@ class ShareViewModel(application: Application) : AndroidViewModel(application) {
             catch (e: Exception){
                 mutableListOf()
             })
-        }
-    }
-
-    fun deleteShare(share: Share) {
-        viewModelScope.launch {
-            repository.deleteShare(share)
-       }
-    }
-
-    fun insertShare(share: Share) {
-        viewModelScope.launch {
-            repository.insertShare(share)
         }
     }
 

@@ -7,13 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hw.app.R
-import com.hw.app.database.Share
-import com.hw.app.database.ShareViewModel
+import com.hw.app.database.ListViewModel
 import kotlinx.android.synthetic.main.fragment_list.view.*
 
 class ListFragment : Fragment() {
@@ -29,7 +27,7 @@ class ListFragment : Fragment() {
         recyclerview.adapter = adapter
         recyclerview.layoutManager = LinearLayoutManager(requireContext())
 
-        val model: ShareViewModel by viewModels()
+        val model: ListViewModel by viewModels()
         model.loadTop15SP500Shares()
 
         model.status.observe(viewLifecycleOwner, Observer { status ->

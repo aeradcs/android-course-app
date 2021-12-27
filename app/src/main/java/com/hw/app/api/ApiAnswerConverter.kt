@@ -16,34 +16,18 @@ object ApiAnswerConverter {
     }
 
     fun parseNamesFromCompanyProfiles(companyProfiles: List<CompanyProfile2>): List<String>{
-        val names: MutableList<String> = mutableListOf()
-        for (i in companyProfiles.indices){
-            names.add(companyProfiles[i].name.toString())
-        }
-        return names
+        return companyProfiles.map { it.name.toString() }
     }
 
     fun parseLogosFromCompanyProfiles(companyProfiles: List<CompanyProfile2>): List<String>{
-        val logos: MutableList<String> = mutableListOf()
-        for (i in companyProfiles.indices){
-            logos.add(companyProfiles[i].logo.toString())
-        }
-        return logos
+        return companyProfiles.map { it.logo.toString() }
     }
 
-    fun parsePricesFromStockCandles(stockCandles: MutableList<StockCandles>): MutableList<Float> {
-        val prices: MutableList<Float> = mutableListOf()
-        for (i in 0 until stockCandles.size) {
-            try{
-                prices.add(stockCandles[i].c!![1])
-            }catch (e: Exception){
-                prices.add(0F)
-            }
-        }
-        return prices
+    fun parsePricesFromStockCandles(stockCandles: List<StockCandles>): List<Float> {
+        return stockCandles.map { it.c?.getOrNull(1) ?: 0F }
     }
 
-    fun parseDayChangesFromStockCandles(stockCandles: MutableList<StockCandles>): MutableList<Float> {
+    fun parseDayChangesFromStockCandles(stockCandles: List<StockCandles>): List<Float> {
         val dayChanges: MutableList<Float> = mutableListOf()
         var dayChange: Float
         for (i in 0 until stockCandles.size) {
