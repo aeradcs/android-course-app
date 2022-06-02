@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.item.ItemFragment">
+
+
+    <TextView
+        android:id="@+id/name_header_item_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/name_header"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/day_change_header_item_tv"
+        app:layout_constraintTop_toBottomOf="@+id/day_change_header_item_tv" />
+
+    <TextView
+        android:id="@+id/day_change_header_item_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/day_change_header"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/price_header_item_tv"
+        app:layout_constraintTop_toBottomOf="@+id/price_header_item_tv" />
+
+    <TextView
+        android:id="@+id/ticker_header_item_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="210dp"
+        android:text="@string/ticker_header"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/price_header_item_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/price_header"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/ticker_header_item_tv"
+        app:layout_constraintTop_toBottomOf="@+id/ticker_header_item_tv" />
+
+    <TextView
+        android:id="@+id/ticker_item_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/ticker"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ticker_header_item_tv"
+        app:layout_constraintStart_toEndOf="@+id/ticker_header_item_tv" />
+
+    <TextView
+        android:id="@+id/name_item_tv"
+        android:layout_width="197dp"
+        android:layout_height="151dp"
+        android:layout_marginStart="24dp"
+        android:text="@string/name"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/name_header_item_tv"
+        app:layout_constraintTop_toTopOf="@+id/name_header_item_tv" />
+
+    <TextView
+        android:id="@+id/price_item_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/price"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/dollar_item_tv"
+        app:layout_constraintStart_toEndOf="@+id/dollar_item_tv" />
+
+    <TextView
+        android:id="@+id/day_change_item_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/day_change"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/day_change_header_item_tv"
+        app:layout_constraintStart_toEndOf="@+id/day_change_header_item_tv" />
+
+    <TextView
+        android:id="@+id/percent_item_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/percent"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/day_change_item_tv"
+        app:layout_constraintStart_toEndOf="@+id/day_change_item_tv" />
+
+    <TextView
+        android:id="@+id/dollar_item_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/dollar"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/price_header_item_tv"
+        app:layout_constraintStart_toEndOf="@+id/price_header_item_tv" />
+
+    <Button
+        android:id="@+id/add_to_fav_button"
+        android:layout_width="150dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="140dp"
+        android:text="@string/add_to_favorite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name_header_item_tv" />
+
+    <Button
+        android:id="@+id/del_from_fav_button"
+        android:layout_width="150dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="40dp"
+        android:text="@string/delete_from_favorite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/add_to_fav_button" />
+
+    <ImageView
+        android:id="@+id/logo_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/ic_launcher_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

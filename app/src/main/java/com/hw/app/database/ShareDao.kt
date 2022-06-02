@@ -1,21 +1,19 @@
 package com.hw.app.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
 interface ShareDao {
     @Query("SELECT * FROM share_table")
-    fun findAll(): List<Share>
+    fun findAll(): LiveData<List<Share>>
 
-    @Query("SELECT * FROM share_table WHERE ticker LIKE :ticker")
-    fun findByTicker(ticker: String): Share
+    @Query("SELECT count(*) FROM share_table WHERE ticker LIKE :ticker")
+    suspend fun countRows(ticker: String) : Int
 
-    @Insert
-    fun insertShare(share: Share)
-
-    @Update
-    fun updateShare(share: Share)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertShare(share: Share)
 
     @Delete
-    fun deleteShare(share: Share)
+    suspend fun deleteShare(share: Share)
 }
