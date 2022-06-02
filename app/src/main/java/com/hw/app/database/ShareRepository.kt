@@ -11,15 +11,11 @@ class ShareRepository(private val shareDao: ShareDao, private val cacheShareDao:
     val allSharesFromDatabase: LiveData<List<Share>> = shareDao.findAll()
 
     suspend fun insertShare(share: Share){
-        if(shareDao.countRows(share.ticker) == 0){
             shareDao.insertShare(share)
-        }
     }
 
     suspend fun deleteShare(share: Share){
-        if(shareDao.countRows(share.ticker) == 1){
             shareDao.deleteShare(share)
-        }
     }
 
     fun loadSharesFromApi(symbols: String): List<Share> {
@@ -63,9 +59,9 @@ class ShareRepository(private val shareDao: ShareDao, private val cacheShareDao:
     }
 
     private suspend fun saveTop15SP500SharesToCache(currentTime: Long, tickers: List<String>, names: List<String>,
-                                                    prices: List<Float?>, dayChanges: List<Float?>, logos: List<String>) {
+                                                    prices: List<Float>, dayChanges: List<Float>, logos: List<String>) {
         for(i in tickers.indices){
-            cacheShareDao.insertShare(CacheShare(tickers[i], names[i], prices[i]!!, dayChanges[i]!!, currentTime, logos[i]))
+            cacheShareDao.insertShare(CacheShare(tickers[i], names[i], prices[i], dayChanges[i], currentTime, logos[i]))
         }
     }
 }

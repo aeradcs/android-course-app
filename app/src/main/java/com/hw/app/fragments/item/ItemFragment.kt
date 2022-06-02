@@ -1,8 +1,6 @@
 package com.hw.app.fragments.item
 
-import android.graphics.Color
 import android.os.Bundle
-import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,18 +10,17 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.hw.app.R
+import com.hw.app.database.ItemViewModel
 import com.hw.app.database.Share
-import com.hw.app.database.ShareViewModel
+import com.hw.app.database.ListViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_item.view.*
 import kotlinx.android.synthetic.main.fragment_item.*
-import kotlinx.android.synthetic.main.list_item.view.*
-import kotlinx.android.synthetic.main.list_item_fav.view.*
 
 class ItemFragment : Fragment() {
 
     private val args by navArgs<ItemFragmentArgs>()
-    private val model: ShareViewModel by viewModels()
+    private val model: ItemViewModel by viewModels()
     lateinit var logo: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -83,13 +80,13 @@ class ItemFragment : Fragment() {
         val priceText = price_item_tv.text.toString()
         val dayChangeText = day_change_item_tv.text.toString()
 
-        if(isValidInput(ticker, name, priceText, dayChangeText)){
+//        if(isValidInput(ticker, name, priceText, dayChangeText)){
             val price = priceText.toFloat()
             val dayChange = dayChangeText.toFloat()
             val share = Share(ticker, name, price, dayChange, logo)
             model.deleteShare(share)
             findNavController().navigate(R.id.action_item_fragment_to_favorite_fragment)
-        }
+//        }
     }
 
     private fun insertItemInDatabase() {
@@ -98,16 +95,16 @@ class ItemFragment : Fragment() {
         val priceText = price_item_tv.text.toString()
         val dayChangeText = day_change_item_tv.text.toString()
 
-        if(isValidInput(ticker, name, priceText, dayChangeText)){
+//        if(isValidInput(ticker, name, priceText, dayChangeText)){
             val price = priceText.toFloat()
             val dayChange = dayChangeText.toFloat()
             val share = Share(ticker, name, price, dayChange, logo)
             model.insertShare(share)
             findNavController().navigate(R.id.action_item_fragment_to_favorite_fragment)
-        }
+//        }
     }
 
-    private fun isValidInput(ticker: String, name: String, price: String, dayChange: String):Boolean{
-        return (!TextUtils.isEmpty(ticker) && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(price) && !TextUtils.isEmpty(dayChange))
-    }
+//    private fun isValidInput(ticker: String, name: String, price: String, dayChange: String):Boolean{
+//        return (!TextUtils.isEmpty(ticker) && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(price) && !TextUtils.isEmpty(dayChange))
+//    }
 }

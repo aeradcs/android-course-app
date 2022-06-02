@@ -11,7 +11,7 @@ interface ShareDao {
     @Query("SELECT count(*) FROM share_table WHERE ticker LIKE :ticker")
     suspend fun countRows(ticker: String) : Int
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertShare(share: Share)
 
     @Delete

@@ -1,9 +1,6 @@
 package com.hw.app.database.cache
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface CacheShareDao {
@@ -16,9 +13,12 @@ interface CacheShareDao {
     @Query("SELECT count(*) FROM cache_table")
     suspend fun countCachedRows() : Int
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertShare(cacheShare: CacheShare)
 
     @Delete
     suspend fun deleteShare(cacheShare: CacheShare)
+
+    @Query("delete from cache_table")
+    suspend fun del()
 }
